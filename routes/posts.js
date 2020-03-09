@@ -21,8 +21,8 @@ router.get('/:id', (req, res, next)  => {
   res.send('/posts/show');
 });
 
-/* GET posts edit /posts/:id. */
-router.get('/:id', (req, res, next)  => {
+/* GET posts edit /posts/:id/edit. */
+router.get('/:id/edit', (req, res, next)  => {
   res.send('/posts/edit');
 });
 
