@@ -46,9 +46,14 @@ router.put('/forgot-password', (req, res, next)  => {
   res.send('PUT /forgot-password');
 });
 
+/* GET /reset-password. */
+router.get('/reset-password/:token', (req, res, next)  => {
+  res.send('GET /reset-password/:token');
+});
+
 /* PUT /reset-password. */
 router.put('/reset-password/:token', (req, res, next)  => {
-  res.send('GET /reset-password/:token');
+  res.send('PUT /reset-password/:token');
 });
 
 module.exports = router;
