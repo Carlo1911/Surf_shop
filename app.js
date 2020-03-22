@@ -61,8 +61,10 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
   req.user = {
-    '_id': '5e73c424cd9624bde104ac74',
-    'username': 'carlo'
+    // '_id': '5e73c424cd9624bde104ac74',
+    // 'username': 'carlo'
+    '_id': '5e74f3ab2e4a9d48a69707d8',
+    'username': 'andre'
   };
   res.locals.currentUser = req.user;
   res.locals.title = 'Surf Shop';

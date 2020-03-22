@@ -7,10 +7,12 @@ async function seedPosts(){
         const post = {
             title: faker.lorem.word(),
             description: faker.lorem.text(),
+            price: faker.random.number(),
+            coordinates: [-122.0842, 37.4224],
             author: {
                 '_id': '5e73c424cd9624bde104ac74',
                 'username': 'carlo'
-              }
+            }
         }
         await Post.create(post);
     }
