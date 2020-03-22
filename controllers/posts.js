@@ -19,6 +19,7 @@ module.exports = {
         posts.page = Number(posts.page);
         res.render('posts/index', {
             posts,
+            mapBoxToken: process.env.MAPBOX_TOKEN,
             title: 'Posts Index'
         });
     },
