@@ -1,17 +1,22 @@
 const User = require('../models/user');
 const Post = require('../models/post');
 const passport = require('passport');
+const mapBoxToken = process.env.MAPBOX_TOKEN;
 
 module.exports = {
     async landingPage(req, res, next) {
         const posts = await Post.find({});
         res.render('index', {
             posts,
-            mapBoxToken: process.env.MAPBOX_TOKEN,
+            mapBoxToken,
             title: 'Surf Shop - Home'
         });
     },
-
+    //GET register
+    getRegister(req, res, next){
+        res.render('register', { title: 'Register' });
+    },
+    //POST register
     async postRegister(req, res, next) {
         const newUser = new User({
             username: req.body.username,
@@ -19,10 +24,17 @@ module.exports = {
             image: req.body.image
         });
 
-        await User.register(newUser, req.body.password);
-        res.redirect('/');
+        let user = await User.register(newUser, req.body.password);
+        req.login(user, function(err){
+            if (err) return next(err);
+            req.session.success = `Welcome to Surf Shop, ${user.username}`;
+            res.redirect('/');
+        });
     },
 
+    getLogin(req, res, next){
+        res.render('login', { title: 'Login' });
+    },
     postLogin(req, res, next) {
         passport.authenticate('local', {
             successRedirect: '/',

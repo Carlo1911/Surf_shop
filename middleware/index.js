@@ -1,4 +1,5 @@
 const Review = require('../models/review');
+const User = require('../models/user');
 
 module.exports = {
     AsyncErrorHandler: (fn) =>
@@ -13,5 +14,13 @@ module.exports = {
         }
         req.session.error = "Bye Bye";
         return res.redirect('/');
+    },
+    checkIfUserExists: async (req, res, nect) => {
+        let userExists = await User.findOne({'email': req.body.email});
+        if (userExists){
+            req.session.error = 'A user with the given email is already register';
+            return res.redirect('back')
+        }
+        next();
     }
 }
