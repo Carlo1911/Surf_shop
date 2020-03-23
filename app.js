@@ -4,6 +4,7 @@ const express = require('express');
 const engine = require('ejs-mate');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const favicon = require('serve-favicon');
 const logger = require('morgan');
 const passport = require('passport');
 const User = require('./models/user');
@@ -11,7 +12,6 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 // const seedPost = require('./seeds');
-
 // seedPost();
 
 //require routes
@@ -36,7 +36,7 @@ app.set('view engine', 'ejs');
 // Set public assets directory
 app.use(express.static('public'));
 
-
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -60,12 +60,6 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
-  // req.user = {
-  //   // '_id': '5e73c424cd9624bde104ac74',
-  //   // 'username': 'carlo'
-  //   '_id': '5e74f3ab2e4a9d48a69707d8',
-  //   'username': 'andre'
-  // };
   res.locals.currentUser = req.user;
   res.locals.title = 'Surf Shop';
   res.locals.success = req.session.success || '';

@@ -15,12 +15,10 @@ module.exports = {
         req.session.error = "Bye Bye";
         return res.redirect('/');
     },
-    checkIfUserExists: async (req, res, nect) => {
-        let userExists = await User.findOne({'email': req.body.email});
-        if (userExists){
-            req.session.error = 'A user with the given email is already register';
-            return res.redirect('back')
-        }
-        next();
+    isLoggedIn: async (req, res, next) => {
+        if(req.isAuthenticated()) return next();
+		req.session.error = 'You need to be logged in to do that!';
+		req.session.redirectTo = req.originalUrl;
+		res.redirect('/login');
     }
 }
