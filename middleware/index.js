@@ -3,7 +3,7 @@ const User = require('../models/user');
 const Post = require('../models/post');
 
 module.exports = {
-    AsyncErrorHandler: (fn) =>
+    asyncErrorHandler: (fn) =>
         (req, res, next) => {
             Promise.resolve(fn(req, res, next))
                 .catch(next);

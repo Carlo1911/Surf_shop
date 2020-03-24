@@ -6,34 +6,33 @@ const {
   postRegister,
   getLogin,
   postLogin,
-  getLogout
+  getLogout,
+  getProfile
 } = require('../controllers');
 const {
-  AsyncErrorHandler
+  asyncErrorHandler, isLoggedIn
 } = require('../middleware');
 
 /* GET home page. */
-router.get('/', AsyncErrorHandler(landingPage));
+router.get('/', asyncErrorHandler(landingPage));
 
 /* GET /register. */
 router.get('/register', getRegister);
 
 /* POST /register. */
-router.post('/register', AsyncErrorHandler(postRegister));
+router.post('/register', asyncErrorHandler(postRegister));
 
 /* GET /login. */
 router.get('/login', getLogin);
 
 /* POST /login. */
-router.post('/login', AsyncErrorHandler(postLogin));
+router.post('/login', asyncErrorHandler(postLogin));
 
 /* GET /logout. */
 router.get('/logout', getLogout);
 
 /* GET /profile. */
-router.get('/profile', (req, res, next) => {
-  res.send('GET /profile');
-});
+router.get('/profile', isLoggedIn, asyncErrorHandler(getProfile));
 
 /* PUT /profile/:user_id. */
 router.put('/profile/:user_id', (req, res, next) => {

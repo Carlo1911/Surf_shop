@@ -36,6 +36,7 @@ module.exports = {
 
     getLogin(req, res, next){
         if (req.isAuthenticated()) return redirect('/');
+        if (req.query.returnTo) req.session.redirectTo = req.headers.referer;
         res.render('login', { title: 'Login' });
     },
     async postLogin(req, res, next) {
@@ -56,5 +57,10 @@ module.exports = {
     getLogout(req, res, next) {
         req.logout();
         res.redirect('/');
+    },
+
+    async getProfile(req, res, next) {
+        const posts = await Post.find().where('author').equals(req.user._id).limit(10).exec();
+        res.render('profile', { posts });
     }
 }
