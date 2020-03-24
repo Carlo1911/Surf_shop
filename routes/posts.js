@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const { cloudinary, storage } = require('../cloudinary');
 const upload = multer({storage});
-const { AsyncErrorHandler, isLoggedIn } = require('../middleware');
+const { AsyncErrorHandler, isLoggedIn, isAuthor } = require('../middleware');
 const {
   postIndex,
   postNew,
@@ -27,12 +27,12 @@ router.post('/', isLoggedIn, upload.array('images', 4), AsyncErrorHandler(postCr
 router.get('/:id', AsyncErrorHandler(postShow));
 
 /* GET posts edit /posts/:id/edit. */
-router.get('/:id/edit', AsyncErrorHandler(postEdit));
+router.get('/:id/edit', isLoggedIn, AsyncErrorHandler(isAuthor), AsyncErrorHandler(postEdit));
 
 /* PUT posts update /posts/:id. */
-router.put('/:id', upload.array('images', 4), AsyncErrorHandler(postUpdate));
+router.put('/:id', isLoggedIn, AsyncErrorHandler(isAuthor), upload.array('images', 4), AsyncErrorHandler(postUpdate));
 
 /* DELETE posts destroy /posts/:id. */
-router.delete('/:id', AsyncErrorHandler(postDestroy));
+router.delete('/:id', isLoggedIn, AsyncErrorHandler(isAuthor), AsyncErrorHandler(postDestroy));
 
 module.exports = router;
