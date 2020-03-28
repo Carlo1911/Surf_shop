@@ -6,7 +6,8 @@ var map = new mapboxgl.Map({
 });
 
 map.addControl(new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken
+    accessToken: mapboxgl.accessToken,
+    marker: false,
 }));
 
 map.on('load', function () {
@@ -121,4 +122,10 @@ map.on('load', function () {
     map.on('mouseleave', 'clusters', mouseLeaveCursor);
     map.on('mouseenter', 'unclustered-point', mouseenterCursor);
     map.on('mouseleave', 'unclustered-point', mouseLeaveCursor);
+
 });
+
+// Disable the zoom from the mouse scrollwheel
+map.scrollZoom.disable();
+// Add zoom and rotation
+map.addControl(new mapboxgl.NavigationControl());
