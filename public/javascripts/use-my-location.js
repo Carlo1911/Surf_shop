@@ -8,7 +8,7 @@ function geoFindMe(e) {
         const longitude = position.coords.longitude;
         const latitude = position.coords.latitude;
 
-        status.textContent = '';
+        status.textContent = `Latitude: ${longitude}, Longitude: ${latitude}`;
         locationInput.value = `[${longitude}, ${latitude}]`;
     }
 
